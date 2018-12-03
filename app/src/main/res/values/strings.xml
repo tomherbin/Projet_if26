@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">Projet_if26</string>
     <string name="button">Bouton</string>
+    <string name="title_activity_navigation">Navigation</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="add">Add</string>
+    <string name="Exercices">Exercices</string>
+    <string name="search">Search</string>
+    <string name="messages">Messages</string>
+    <string name="account">Account</string>
+    <string name="Chat">Chat</string>
+    <string name="rechercher">Rechercher</string>
+    <string name="proposer">Proposer</string>
+    <string name="profil">Profil</string>
 </resources>
