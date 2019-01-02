@@ -16,9 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".fragment_home" />
+        <activity android:name=".Home" />
+        <activity android:name=".Search" />
         <activity
-            android:name=".Navigation"
-            android:label="@string/title_activity_navigation" />
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".Message" />
+        <activity android:name=".Profil" />
+        <activity
+            android:name=".Entrainement"
+            android:label="@string/title_activity_entrainement"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
