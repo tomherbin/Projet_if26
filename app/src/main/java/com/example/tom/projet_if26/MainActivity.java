@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tom.projet_if26.ui.add.AddFragment;
 import com.example.tom.projet_if26.ui.home.HomeFragment;
 import com.example.tom.projet_if26.ui.message.MessageFragment;
 import com.example.tom.projet_if26.ui.profil.ProfilFragment;
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_search:
                     mTextMessage.setText("mfds");
                     showFragment(new SearchFragment());
+                    return true;
+                case R.id.navigation_add:
+                    mTextMessage.setText("mfds");
+                    showFragment(new AddFragment());
                     return true;
 
                 case R.id.navigation_messages:

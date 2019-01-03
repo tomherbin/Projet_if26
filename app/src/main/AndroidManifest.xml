@@ -27,7 +27,8 @@
         <activity
             android:name=".Entrainement"
             android:label="@string/title_activity_entrainement"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Add"></activity>
     </application>
 
 </manifest>
