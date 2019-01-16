@@ -5,10 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tom.projet_if26.ui.home.HomeFragment;
+
+import java.util.ArrayList;
 
 public class Home extends AppCompatActivity {
 
@@ -25,18 +28,10 @@ public class Home extends AppCompatActivity {
                     .replace(R.id.container, HomeFragment.newInstance())
                     .commitNow();
 
-
-
-
-            ListView maListe = (ListView) findViewById(R.id.module_liste_lv);
-            ModulePersistance persistance = new ModulePersistance(this, "modules.db", null, 1);
-            persistance.initData();
-            ArrayList<Module> modules = persistance.getAllModules();
-
-
-
-
         }
+
+      
+
     }
 
 

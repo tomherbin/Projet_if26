@@ -36,17 +36,14 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
 
 
 
-    public EntrainementPersistance(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public EntrainementPersistance(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        System.out.println("Banzaiiiii");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        final String table_entrainement_create =
-                "CREATE TABLE " + TABLE_ENTRAINEMENT + "(" +
-                        ATTRIBUT_KEY + "TEXT primary key,"  +
-                        ATTRIBUT_TITRE_ENTRAINEMENT + " TEXT)";
 
         final String table_exercice_create =
                 "CREATE TABLE " + TABLE_EXERCICE + "(" +
@@ -54,12 +51,19 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
                         ATTRIBUT_KEY + " TEXT primary key,"  +
                         ATTRIBUT_TITRE_EXERCICE + " TEXT, " +
                         ATTRIBUT_REPS + " INTEGER, " +
-                        ATTRIBUT_SERIE + " INTEGER" +
-                        ")";
+                        ATTRIBUT_SERIE + " INTEGER)";
+
+        final String table_entrainement_create =
+                "CREATE TABLE " + TABLE_ENTRAINEMENT + "(" +
+                        ATTRIBUT_KEY + "TEXT primary key,"  +
+                        ATTRIBUT_TITRE_ENTRAINEMENT + " TEXT)";
+
 
         final String fk = "ALTER TABLE" + TABLE_EXERCICE + "\n" +
                 "ADD CONSTRAINT fk_exercice_key FOREIGN KEY ("+ATTRIBUT_EXERCICEKEY+") REFERENCES "+TABLE_ENTRAINEMENT+"("+ATTRIBUT_EXERCICEKEY+"); ";
         db.execSQL(table_entrainement_create);
+        db.execSQL(table_exercice_create);
+        db.execSQL(fk);
         System.out.println("Table créé : "+table_exercice_create);
         System.out.println("Table créé : "+table_entrainement_create);
         System.out.println("Clé étrangère créée : "+fk);
