@@ -12,15 +12,6 @@
         android:title="@string/rechercher" />
 
     <item
-        android:id="@+id/navigation_add"
-        android:icon="@drawable/ic_add_black_24dp"
-        android:title="@string/proposer" />
-
-    <item
-        android:id="@+id/navigation_messages"
-        android:icon="@drawable/ic_chat_bubble_black_24dp"
-        android:title="@string/messages" />
-    <item
         android:id="@+id/navigation_account"
         android:icon="@drawable/ic_account_circle_black_24dp"
         android:title="@string/profil" />
