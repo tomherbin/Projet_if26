@@ -6,7 +6,8 @@ public class ProgrammeEntrainement {
 
 
     private String titre;
-    private String key;
+    private int key;
+    private int repetition;
     private ArrayList<Exercice> exercice;
 
 
@@ -14,26 +15,28 @@ public class ProgrammeEntrainement {
         this.titre = titre;
     }
 
-    public ProgrammeEntrainement(String titre, String key, ArrayList<Exercice> exercice) {
+    public ProgrammeEntrainement(String titre, int key, ArrayList<Exercice> exercice,int repetition) {
         this.titre = titre;
         this.key = key;
         this.exercice = exercice;
+        this.repetition=repetition;
         this.init();
     }
 
     public String getTitre() {
         return titre;
     }
+    public int getRepetition(){ return repetition;}
 
     public void setTitre(String titre) {
         this.titre = titre;
     }
 
-    public String getKey() {
+    public int getKey() {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(int key) {
         this.key = key;
     }
 
@@ -64,8 +67,6 @@ public class ProgrammeEntrainement {
         ajoute(new Exercice("Tractions", 3, 4, "AXA2"));
         ajoute(new Exercice("Dips", 3, 4, "AXA3"));
         ajoute(new Exercice("Gainage", 3, 4, "AXA4"));
-
-
 
     }
 }

@@ -24,8 +24,9 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
     // liste des attributs
     private static final String ATTRIBUT_TITRE_ENTRAINEMENT = "titreEntrainement";
     private static final String ATTRIBUT_KEY = "key";
+    private static final String ATTRIBUT_REPETITION = "repetition";
 
-
+/*
     // nom de la table
     private static final String TABLE_EXERCICE = "exercice";
     //attributs
@@ -33,19 +34,56 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
     private static final String ATTRIBUT_EXERCICEKEY = "exerciceKey";
     private static final String ATTRIBUT_REPS = "reps";
     private static final String ATTRIBUT_SERIE = "serie";
+*/
 
 
-
-    public EntrainementPersistance(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
-        System.out.println("Banzaiiiii");
+    public EntrainementPersistance(Context context ) {
+        super(context, DATABASE_NAME, null, 1);
     }
 
+    public void onCreate(SQLiteDatabase db) {
+        final String table_entrainement_create =
+                "CREATE TABLE " + TABLE_ENTRAINEMENT + "(" +
+                        ATTRIBUT_KEY + "INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        ATTRIBUT_TITRE_ENTRAINEMENT + " TEXT," +
+                        ATTRIBUT_REPETITION + "INTEGER)";
+        db.execSQL(table_entrainement_create);
+
+    }
+
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE " + TABLE_ENTRAINEMENT);
+        onCreate(db);
+    }
+
+    public void addEntrainement(String nom) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ATTRIBUT_TITRE_ENTRAINEMENT, nom);
+        values.put(ATTRIBUT_REPETITION,0);
+
+        db.insert(TABLE_ENTRAINEMENT, null, values);
+        db.close();
+    }
+
+    public Cursor getListEntrainement() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor data = db.rawQuery("SELECT titreEntrainement FROM " + TABLE_ENTRAINEMENT,null);
+        return  data;
+
+    }
+    public void initData(){
+        PredefiniEntrainement liste = new PredefiniEntrainement();
+        for (ListeEntrainement l : liste.getListe()){
+            addEntrainement(l.getTitre());
+        }
+    }
+
+/*--------------------
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        final String table_exercice_create =
+       /* final String table_exercice_create =
                 "CREATE TABLE " + TABLE_EXERCICE + "(" +
                         ATTRIBUT_EXERCICEKEY + " TEXT primary key,"  +
                         ATTRIBUT_KEY + " TEXT primary key,"  +
@@ -56,17 +94,18 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
         final String table_entrainement_create =
                 "CREATE TABLE " + TABLE_ENTRAINEMENT + "(" +
                         ATTRIBUT_KEY + "TEXT primary key,"  +
-                        ATTRIBUT_TITRE_ENTRAINEMENT + " TEXT)";
+                        ATTRIBUT_TITRE_ENTRAINEMENT + " TEXT, +" +
+                        ATTRIBUT_REPETITION +"INTEGER)";
 
 
-        final String fk = "ALTER TABLE" + TABLE_EXERCICE + "\n" +
-                "ADD CONSTRAINT fk_exercice_key FOREIGN KEY ("+ATTRIBUT_EXERCICEKEY+") REFERENCES "+TABLE_ENTRAINEMENT+"("+ATTRIBUT_EXERCICEKEY+"); ";
+       // final String fk = "ALTER TABLE" + TABLE_EXERCICE + "\n" +
+        //        "ADD CONSTRAINT fk_exercice_key FOREIGN KEY ("+ATTRIBUT_EXERCICEKEY+") REFERENCES "+TABLE_ENTRAINEMENT+"("+ATTRIBUT_EXERCICEKEY+"); ";
         db.execSQL(table_entrainement_create);
-        db.execSQL(table_exercice_create);
-        db.execSQL(fk);
-        System.out.println("Table créé : "+table_exercice_create);
+        //db.execSQL(table_exercice_create);
+       // db.execSQL(fk);
+       //System.out.println("Table créé : "+table_exercice_create);
         System.out.println("Table créé : "+table_entrainement_create);
-        System.out.println("Clé étrangère créée : "+fk);
+      //  System.out.println("Clé étrangère créée : "+fk);
 
 
     }
@@ -74,7 +113,7 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE "+TABLE_EXERCICE);
+     //   db.execSQL("DROP TABLE "+TABLE_EXERCICE);
         db.execSQL("DROP TABLE "+TABLE_ENTRAINEMENT);
         onCreate(db);
     }
@@ -104,7 +143,7 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
 
     @Override
     public void initData() {
-
+System.out.println("Création");
 
 
 
@@ -135,7 +174,7 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
         return p;
     }
 
-    */
+
 
 
     @Override
@@ -164,4 +203,6 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
         return exercices;
 
     }
+
+  ---------------------  */
 }
