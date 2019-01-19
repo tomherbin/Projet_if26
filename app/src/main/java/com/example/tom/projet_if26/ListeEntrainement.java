@@ -2,19 +2,19 @@ package com.example.tom.projet_if26;
 
 public class ListeEntrainement {
     private String titre;
-    private int repétition;
+    private int repetition;
 
-    public int getRepétition() {
-        return repétition;
+    public int getRepetition() {
+        return repetition;
     }
 
     public void setRepétition(int repétition) {
-        this.repétition = repétition;
+        this.repetition = repétition;
     }
 
     public ListeEntrainement(String titre, int repétition){
         this.titre=titre;
-        this.repétition=repétition;
+        this.repetition=repetition;
     }
 
     public String getTitre() {

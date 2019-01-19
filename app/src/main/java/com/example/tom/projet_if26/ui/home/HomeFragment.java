@@ -1,6 +1,8 @@
 package com.example.tom.projet_if26.ui.home;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,10 +21,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.tom.projet_if26.AdapterListeEntrainement;
 import com.example.tom.projet_if26.Entrainement;
 import com.example.tom.projet_if26.EntrainementPersistance;
 import com.example.tom.projet_if26.Home;
+import com.example.tom.projet_if26.ListeEntrainement;
 import com.example.tom.projet_if26.MainActivity;
+import com.example.tom.projet_if26.PredefiniEntrainement;
 import com.example.tom.projet_if26.R;
 
 import java.util.ArrayList;
@@ -31,7 +36,7 @@ public class HomeFragment extends Fragment {
 
     private HomeViewModel mViewModel;
     private EntrainementPersistance db ;
-
+    private  AdapterListeEntrainement adaptateur;
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -46,8 +51,13 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.home_fragment, container, false);
-        db= new EntrainementPersistance(getContext());
+        db= new EntrainementPersistance(getActivity());
+        PredefiniEntrainement liste = new PredefiniEntrainement();
+        ArrayList<ListeEntrainement> entrainements = liste.getListe();
+        adaptateur = new AdapterListeEntrainement(getActivity(),R.layout.liste_entrainements,entrainements);
+
         initUI(v);
         return v;
 
@@ -63,7 +73,9 @@ public class HomeFragment extends Fragment {
 
 
     private void initUI(View v){
+
         ListView lv = v.findViewById(R.id.lv);
+        lv.setAdapter(adaptateur);
         FloatingActionButton add = (FloatingActionButton) v.findViewById(R.id.fba);
         add.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -71,31 +83,25 @@ public class HomeFragment extends Fragment {
                 AlertDialog.Builder mBuilder= new AlertDialog.Builder(getActivity());
                 View mView= getLayoutInflater().inflate(R.layout.dialog_entre,null);
                 final EditText nom= (EditText) mView.findViewById(R.id.editNom);
-                Button ok = (Button) mView.findViewById(R.id.btnOk);
-
-                ok.setOnClickListener(new View.OnClickListener(){
+                mBuilder.setView(mView).setTitle("Ajouter entrainement").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        if(!nom.getText().toString().isEmpty()){
+                    public void onClick(DialogInterface dialog, int which) {
 
-                            Toast.makeText(getActivity(),
-                                    "Ajout réussi",Toast.LENGTH_SHORT).show();
-                            db.addEntrainement(nom.getText().toString());
-
-                        }else{
-                            Toast.makeText(getActivity(),
-                                    "Insérer un nom",Toast.LENGTH_SHORT).show();
-                        }
+                    }
+                }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EntrainementPersistance data = new EntrainementPersistance(getContext());
+                        data.addEntrainement(nom.getText().toString());
                     }
                 });
-                mBuilder.setView(mView);
                 AlertDialog dialog =mBuilder.create();
                 dialog.show();
             }
         });
+
         ArrayList<String> list = new ArrayList<>();
         Cursor data = db.getListEntrainement();
     }
-
 
 }

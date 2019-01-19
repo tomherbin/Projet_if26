@@ -35,13 +35,17 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_exercices:
                     mTextMessage.setText("Lol");
                     showFragment(new HomeFragment());
+                    getSupportActionBar().setTitle("Mes entraînements");
                     return true;
                 case R.id.navigation_search:
                     mTextMessage.setText("mfds");
+                    getSupportActionBar().setTitle("Rechercher");
                     showFragment(new SearchFragment());
+
                     return true;
                 case R.id.navigation_account:
                     mTextMessage.setText("SFMD");
+                    getSupportActionBar().setTitle("Mon compte");
                     showFragment(new ProfilFragment());
                     return true;
             }
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        getSupportActionBar().setTitle("Mes entraînements");
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         showFragment(new HomeFragment());

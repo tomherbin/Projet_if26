@@ -18,7 +18,7 @@ public class AdapterListeEntrainement extends ArrayAdapter<ListeEntrainement> {
     int resource;
     ArrayList<ListeEntrainement>liste;
 
-    public AdapterListeEntrainement(Context context, int resource, ArrayList<ListeEntrainement> objects, Context context1) {
+    public AdapterListeEntrainement(Context context, int resource, ArrayList<ListeEntrainement> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource=resource;
@@ -33,7 +33,10 @@ public class AdapterListeEntrainement extends ArrayAdapter<ListeEntrainement> {
 
         ListeEntrainement listes = liste.get(position);
         TextView titre =(TextView) v.findViewById(R.id.nomEntrainement);
-        TextView description =(TextView) v.findViewById(R.id.description);&
+
+        TextView compteur=(TextView)v.findViewById(R.id.compteur);
+
+        TextView description =(TextView) v.findViewById(R.id.description);
 
         return v;
     }

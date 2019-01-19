@@ -78,6 +78,21 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
             addEntrainement(l.getTitre());
         }
     }
+    public ArrayList<ListeEntrainement>getAllEntrainements(){
+        ArrayList<ListeEntrainement> listes = new ArrayList<ListeEntrainement>();
+        String selectQuery = "SELECT * FROM "+ TABLE_ENTRAINEMENT;
+
+        SQLiteDatabase bdd=  this.getWritableDatabase();
+        Cursor cursor =bdd.rawQuery(selectQuery,null);
+
+        if (cursor.moveToFirst()){
+            do{
+                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2)));
+            }while(cursor.moveToNext());
+        }
+        bdd.close();
+        return listes;
+    }
 
 /*--------------------
     @Override
