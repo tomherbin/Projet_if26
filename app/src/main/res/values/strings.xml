@@ -180,6 +180,6 @@
     <string name="action_settings">Settings</string>
     <string name="ajouter_un_entrainement">Ajouter un entraînement</string>
     <string name="entrer_le_nom_de_votre_entrainement">Entrer le nom de votre entraînement</string>
-    <string name="nom">nom</string>
+    <string name="nom">Nom</string>
     <string name="valider">Valider</string>
 </resources>

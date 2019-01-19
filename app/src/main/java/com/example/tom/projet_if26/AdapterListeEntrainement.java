@@ -33,8 +33,10 @@ public class AdapterListeEntrainement extends ArrayAdapter<ListeEntrainement> {
 
         ListeEntrainement listes = liste.get(position);
         TextView titre =(TextView) v.findViewById(R.id.nomEntrainement);
+        titre.setText(listes.getTitre());
 
         TextView compteur=(TextView)v.findViewById(R.id.compteur);
+        compteur.setText(String.valueOf(listes.getRepetition()));
 
         TextView description =(TextView) v.findViewById(R.id.description);
 

@@ -16,7 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".fragment_home" />
         <activity android:name=".Home" />
         <activity android:name=".Search" />
         <activity

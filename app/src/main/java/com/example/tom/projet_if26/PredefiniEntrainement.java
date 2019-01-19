@@ -32,6 +32,18 @@ public class PredefiniEntrainement {
         return res;
     }
 
+    public ArrayList<Integer>getRepetition(){
+        ArrayList res = new ArrayList();
+        Iterator it = res.iterator();
+        while (it.hasNext())
+        {
+            ListeEntrainement l = (ListeEntrainement) (it.next());
+            res.add(l.getRepetition());
+
+        }
+        return res;
+    }
+
     public ArrayList<ListeEntrainement>getListe(){
         return profil;
     }

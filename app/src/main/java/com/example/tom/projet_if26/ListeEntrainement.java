@@ -9,10 +9,10 @@ public class ListeEntrainement {
     }
 
     public void setRepétition(int repétition) {
-        this.repetition = repétition;
+        this.repetition = repetition;
     }
 
-    public ListeEntrainement(String titre, int repétition){
+    public ListeEntrainement(String titre, int repetition){
         this.titre=titre;
         this.repetition=repetition;
     }

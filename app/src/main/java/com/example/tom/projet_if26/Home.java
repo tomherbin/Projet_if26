@@ -26,19 +26,20 @@ import java.util.List;
 public class Home extends AppCompatActivity {
     private ListView lv;
     private FloatingActionButton add;
+    private EntrainementPersistance bdd;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_activity);
+        setContentView(R.layout.home_fragment);
         getSupportActionBar().setTitle("Entraînement");
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.container, HomeFragment.newInstance())
                     .commitNow();
         }
-
+        bdd = new EntrainementPersistance(this);
 
 
 

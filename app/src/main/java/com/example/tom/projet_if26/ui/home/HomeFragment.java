@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,15 +28,15 @@ import com.example.tom.projet_if26.EntrainementPersistance;
 import com.example.tom.projet_if26.Home;
 import com.example.tom.projet_if26.ListeEntrainement;
 import com.example.tom.projet_if26.MainActivity;
+import com.example.tom.projet_if26.PersistanceTraining;
 import com.example.tom.projet_if26.PredefiniEntrainement;
 import com.example.tom.projet_if26.R;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends ListFragment {
 
     private HomeViewModel mViewModel;
-    private EntrainementPersistance db ;
     private  AdapterListeEntrainement adaptateur;
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -53,30 +54,19 @@ public class HomeFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.home_fragment, container, false);
-        db= new EntrainementPersistance(getActivity());
-        PredefiniEntrainement liste = new PredefiniEntrainement();
-        ArrayList<ListeEntrainement> entrainements = liste.getListe();
-        adaptateur = new AdapterListeEntrainement(getActivity(),R.layout.liste_entrainements,entrainements);
 
-        initUI(v);
         return v;
-
-
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        PersistanceTraining db = new PersistanceTraining(getContext());
+        ArrayList<ListeEntrainement> listes = db.getAllEntrainements();
+        AdapterListeEntrainement adapt = new AdapterListeEntrainement(getContext(), R.layout.liste_entrainements,listes);
+        ListView lv = (ListView) getView().findViewById(R.id.lv);
+        lv.setAdapter(adapt);
 
-
-    private void initUI(View v){
-
-        ListView lv = v.findViewById(R.id.lv);
-        lv.setAdapter(adaptateur);
-        FloatingActionButton add = (FloatingActionButton) v.findViewById(R.id.fba);
+        FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.fba);
         add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,7 +81,7 @@ public class HomeFragment extends Fragment {
                 }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        EntrainementPersistance data = new EntrainementPersistance(getContext());
+                        PersistanceTraining data = new PersistanceTraining(getContext());
                         data.addEntrainement(nom.getText().toString());
                     }
                 });
@@ -100,8 +90,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        ArrayList<String> list = new ArrayList<>();
-        Cursor data = db.getListEntrainement();
     }
 
 }

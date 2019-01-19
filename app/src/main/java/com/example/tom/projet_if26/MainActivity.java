@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView mTextMessage;
-    private SQliteDataBaseHelper db;
+
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
