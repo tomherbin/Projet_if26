@@ -39,7 +39,7 @@ public class Home extends AppCompatActivity {
                     .replace(R.id.container, HomeFragment.newInstance())
                     .commitNow();
         }
-        bdd = new EntrainementPersistance(this);
+
 
 
 
@@ -49,10 +49,7 @@ public class Home extends AppCompatActivity {
 
     }
 
-     /*   public void dEntrainement() {
-            DialogEntrainement dialogEdit = new DialogEntrainement();
-            dialogEdit.show(getSupportFragmentManager(), "Ajouter entraînement");
-    }*/
+
 
 
 

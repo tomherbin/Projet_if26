@@ -182,4 +182,6 @@
     <string name="entrer_le_nom_de_votre_entrainement">Entrer le nom de votre entraînement</string>
     <string name="nom">Nom</string>
     <string name="valider">Valider</string>
+    <string name="description">Description</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

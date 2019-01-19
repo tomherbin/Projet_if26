@@ -15,5 +15,16 @@
         android:inputType="text"
         android:autofillHints="" tools:targetApi="o"/>
 
+    <EditText
+        android:id="@+id/editDesc"
+        android:layout_width="match_parent"
+        android:layout_height="69dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/description"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textSize="14sp" />
+
 
 </LinearLayout>

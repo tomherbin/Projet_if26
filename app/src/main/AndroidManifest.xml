@@ -26,6 +26,10 @@
             android:name=".Entrainement"
             android:label="@string/title_activity_entrainement"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Main3Activity" />
+        <activity android:name=".list" />
+        <activity android:name=".ui.home.ExoFragment" />
+        <activity android:name=".ListeExos"></activity>
     </application>
 
 </manifest>

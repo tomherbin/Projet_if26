@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-public class EntrainementPersistance extends SQLiteOpenHelper implements PersistanceInterface {
+public class EntrainementPersistance extends SQLiteOpenHelper {
 
 
     public static final int DATABASE_VERSION = 1;
@@ -26,10 +26,12 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
     private static final String TABLE_ENTRAINEMENT = "entrainement";
     // liste des attributs
     private static final String ATTRIBUT_TITRE_ENTRAINEMENT = "titreEntrainement";
-    private static final String ATTRIBUT_KEY = "key";
+    private static final String ATTRIBUT_KEY = "cle";
     private static final String ATTRIBUT_REPETITION = "reps";
+    private static final String ATTRIBUT_KEY_ID_EXERCICES ="id_cle";
+    private static final String ATTRIBUT_DESCRIPTION_ENT = "des_entre";
 
-/*
+
     // nom de la table
     private static final String TABLE_EXERCICE = "exercice";
     //attributs
@@ -37,7 +39,8 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
     private static final String ATTRIBUT_EXERCICEKEY = "exerciceKey";
     private static final String ATTRIBUT_REPS = "reps";
     private static final String ATTRIBUT_SERIE = "serie";
-*/
+    private static final String ATTRIBUT_DESCRIPTION_EXO="des_exo";
+
 
 
     public EntrainementPersistance(Context context ) {
@@ -50,12 +53,23 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
     public void onCreate(SQLiteDatabase db) {
         final String table_entrainement_create =
                 "CREATE TABLE " + TABLE_ENTRAINEMENT + "(" +
-                        ATTRIBUT_KEY + "INTEGER PRIMARY KEY AUTOINCREMENT," +
+                        ATTRIBUT_KEY + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         ATTRIBUT_TITRE_ENTRAINEMENT + " VARCHAR," +
-                        ATTRIBUT_REPETITION + "INTEGER)";
-        db.execSQL(table_entrainement_create);
-        System.out.println(table_entrainement_create);
+                        ATTRIBUT_REPETITION + "INTEGER," +
+                        ATTRIBUT_KEY_ID_EXERCICES + "INTEGER,"+
+                        ATTRIBUT_DESCRIPTION_ENT + "VARCHAR)";
 
+        db.execSQL(table_entrainement_create);
+
+        final String table_exercice_create =
+                "CREATE TABLE " + TABLE_EXERCICE + "(" +
+                        ATTRIBUT_EXERCICEKEY + " TEXT primary key,"  +
+                        ATTRIBUT_KEY + " TEXT primary key,"  +
+                        ATTRIBUT_TITRE_EXERCICE + " TEXT, " +
+                        ATTRIBUT_REPS + " INTEGER, " +
+                        ATTRIBUT_SERIE + " INTEGER," +
+                        ATTRIBUT_DESCRIPTION_EXO + "VARCHAR)";
+        db.execSQL(table_exercice_create);
 
     }
 
@@ -64,13 +78,12 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
         onCreate(db);
     }
 
-    public void addEntrainement(String nom) {
+    public void addEntrainement(ListeEntrainement nom) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ATTRIBUT_TITRE_ENTRAINEMENT, nom);
-        values.put(ATTRIBUT_KEY,1);
+        values.put(ATTRIBUT_TITRE_ENTRAINEMENT, nom.getTitre());
+        values.put(ATTRIBUT_DESCRIPTION_ENT, nom.getDescription());
         values.put(ATTRIBUT_REPETITION,0);
-
         db.insert(TABLE_ENTRAINEMENT, null, values);
         db.close();
     }
@@ -78,7 +91,7 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
     public void initData(){
         PredefiniEntrainement liste = new PredefiniEntrainement();
         for (ListeEntrainement l : liste.getListe()){
-            addEntrainement(l.getTitre());
+            addEntrainement(l);
         }
     }
 
@@ -92,7 +105,7 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
 
         if (cursor.moveToFirst()){
             do{
-                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2)));
+                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2),cursor.getString(3)));
             }while(cursor.moveToNext());
         }
         bdd.close();

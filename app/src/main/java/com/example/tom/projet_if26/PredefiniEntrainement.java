@@ -15,11 +15,6 @@ public class PredefiniEntrainement {
     }
     public void init(){
 
-        profil.add((new ListeEntrainement("Biceps", 15)));
-        profil.add((new ListeEntrainement("Top", 154)));
-        profil.add((new ListeEntrainement("Bas", 115)));
-        profil.add((new ListeEntrainement("Cuisse", 15)));
-        profil.add((new ListeEntrainement("Mollets", 112)));
 
     }
 

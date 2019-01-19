@@ -13,10 +13,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,6 +29,7 @@ import com.example.tom.projet_if26.Entrainement;
 import com.example.tom.projet_if26.EntrainementPersistance;
 import com.example.tom.projet_if26.Home;
 import com.example.tom.projet_if26.ListeEntrainement;
+import com.example.tom.projet_if26.ListeExos;
 import com.example.tom.projet_if26.MainActivity;
 import com.example.tom.projet_if26.PersistanceTraining;
 import com.example.tom.projet_if26.PredefiniEntrainement;
@@ -61,13 +64,22 @@ public class HomeFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ListView lv = (ListView) getView().findViewById(R.id.lv);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                    long arg3) {
+                Intent nextActivity = new Intent(getContext(),ListeExos.class);
+                startActivity(nextActivity);
+            }
+
+        });
+
         final PersistanceTraining db = new PersistanceTraining(getContext());
         db.initData();
         listes.clear();
         listes=db.getAllEntrainements();
 
         final AdapterListeEntrainement adapt = new AdapterListeEntrainement(getContext(), R.layout.liste_entrainements,listes);
-
 
         lv.setAdapter(adapt);
 
@@ -78,6 +90,7 @@ public class HomeFragment extends ListFragment {
                 final AlertDialog.Builder mBuilder= new AlertDialog.Builder(getActivity());
                 View mView= getLayoutInflater().inflate(R.layout.dialog_entre,null);
                 final EditText nom= (EditText) mView.findViewById(R.id.editNom);
+                final EditText desc = (EditText) mView.findViewById(R.id.editDesc);
                 mBuilder.setView(mView).setTitle("Ajouter entrainement").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -86,10 +99,12 @@ public class HomeFragment extends ListFragment {
                 }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        db.addEntrainement(nom.getText().toString());
+                        ListeEntrainement entree = new ListeEntrainement(nom.getText().toString(),0,desc.getText().toString());
+                        db.addEntrainement(entree);
                         dialog.dismiss();
                         adapt.notifyDataSetChanged();
+                        Intent myIntent = new Intent(getContext(), ListeExos.class);
+                        getContext().startActivity(myIntent);
 
 
                     }
@@ -98,7 +113,6 @@ public class HomeFragment extends ListFragment {
                 dialog.show();
             }
         });
-
 
     }
 
