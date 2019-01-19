@@ -63,6 +63,7 @@ public class ProgrammeEntrainement {
     }
 
     public void init() {
+        
         ajoute(new Exercice("Pompe", 3, 4, "AXA1"));
         ajoute(new Exercice("Tractions", 3, 4, "AXA2"));
         ajoute(new Exercice("Dips", 3, 4, "AXA3"));

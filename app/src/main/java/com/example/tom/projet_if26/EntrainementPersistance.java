@@ -81,6 +81,8 @@ public class EntrainementPersistance extends SQLiteOpenHelper implements Persist
             addEntrainement(l.getTitre());
         }
     }
+
+
     public ArrayList<ListeEntrainement>getAllEntrainements(){
         ArrayList<ListeEntrainement> listes = new ArrayList<ListeEntrainement>();
         String selectQuery = "SELECT * FROM "+ TABLE_ENTRAINEMENT;

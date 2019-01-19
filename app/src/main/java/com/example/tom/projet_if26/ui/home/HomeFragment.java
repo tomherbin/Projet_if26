@@ -41,7 +41,7 @@ public class HomeFragment extends ListFragment {
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
-
+    private ArrayList<ListeEntrainement> listes;
 
 
     public HomeFragment() {
@@ -50,9 +50,9 @@ public class HomeFragment extends ListFragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+    public View onCreateView( LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
+        listes = new ArrayList<>();
         View v = inflater.inflate(R.layout.home_fragment, container, false);
 
         return v;
@@ -60,10 +60,14 @@ public class HomeFragment extends ListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        PersistanceTraining db = new PersistanceTraining(getContext());
-        ArrayList<ListeEntrainement> listes = db.getAllEntrainements();
-        AdapterListeEntrainement adapt = new AdapterListeEntrainement(getContext(), R.layout.liste_entrainements,listes);
         ListView lv = (ListView) getView().findViewById(R.id.lv);
+        final PersistanceTraining db = new PersistanceTraining(getContext());
+        db.initData();
+        listes.clear();
+        listes=db.getAllEntrainements();
+
+        final AdapterListeEntrainement adapt = new AdapterListeEntrainement(getContext(), R.layout.liste_entrainements,listes);
+
         lv.setAdapter(adapt);
 
         FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.fba);
@@ -81,14 +85,18 @@ public class HomeFragment extends ListFragment {
                 }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PersistanceTraining data = new PersistanceTraining(getContext());
-                        data.addEntrainement(nom.getText().toString());
+
+                        db.addEntrainement(nom.getText().toString());
+                        adapt.notifyDataSetChanged();
+
+
                     }
                 });
                 AlertDialog dialog =mBuilder.create();
                 dialog.show();
             }
         });
+
 
     }
 

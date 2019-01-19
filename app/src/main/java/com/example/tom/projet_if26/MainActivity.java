@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         showFragment(new HomeFragment());
-
-
-
-
     }
 
     private void showFragment(Fragment fragment) {

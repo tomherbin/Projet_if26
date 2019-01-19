@@ -31,21 +31,20 @@ public class PersistanceTraining extends SQLiteOpenHelper {
                         ATTRIBUT_TITRE_ENTRAINEMENT + " VARCHAR," +
                         ATTRIBUT_REPETITION + "INTEGER)";
         db.execSQL(table_entrainement_create);
-        Log.d("AAAA", "onCreate: ");
 
 
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRAINEMENT);
+        db.execSQL("DROP TABLE " + TABLE_ENTRAINEMENT);
         onCreate(db);
     }
 
     public void addEntrainement(String nom) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ATTRIBUT_TITRE_ENTRAINEMENT, nom);
-        values.put(ATTRIBUT_REPETITION,0);
 
         db.insert(TABLE_ENTRAINEMENT, null, values);
         db.close();
@@ -66,7 +65,7 @@ public class PersistanceTraining extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do{
-                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2)));
+                listes.add(new ListeEntrainement(cursor.getString(1),0));
             }while(cursor.moveToNext());
         }
         bdd.close();
