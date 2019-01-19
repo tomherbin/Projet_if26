@@ -68,13 +68,14 @@ public class HomeFragment extends ListFragment {
 
         final AdapterListeEntrainement adapt = new AdapterListeEntrainement(getContext(), R.layout.liste_entrainements,listes);
 
+
         lv.setAdapter(adapt);
 
         FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.fba);
         add.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder mBuilder= new AlertDialog.Builder(getActivity());
+                final AlertDialog.Builder mBuilder= new AlertDialog.Builder(getActivity());
                 View mView= getLayoutInflater().inflate(R.layout.dialog_entre,null);
                 final EditText nom= (EditText) mView.findViewById(R.id.editNom);
                 mBuilder.setView(mView).setTitle("Ajouter entrainement").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -87,6 +88,7 @@ public class HomeFragment extends ListFragment {
                     public void onClick(DialogInterface dialog, int which) {
 
                         db.addEntrainement(nom.getText().toString());
+                        dialog.dismiss();
                         adapt.notifyDataSetChanged();
 
 

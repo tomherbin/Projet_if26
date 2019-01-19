@@ -52,6 +52,7 @@ public class PersistanceTraining extends SQLiteOpenHelper {
 
     public void initData(){
         PredefiniEntrainement liste = new PredefiniEntrainement();
+
         for (ListeEntrainement l : liste.getListe()){
             addEntrainement(l.getTitre());
         }
