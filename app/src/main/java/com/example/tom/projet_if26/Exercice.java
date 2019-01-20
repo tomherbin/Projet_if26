@@ -5,18 +5,18 @@ public class Exercice {
     private String titre;
     private int reps;
     private int serie;
-    private String ExerciceKey;
+    //private String ExerciceKey;
     private String desc;
 
     public Exercice(String titre) {
         this.titre = titre;
     }
 
-    public Exercice(String titre, int reps, int serie, String exerciceKey, String desc) {
+    public Exercice(String titre, int reps, int serie, String desc) {
         this.titre = titre;
         this.reps = reps;
         this.serie = serie;
-        this.ExerciceKey = exerciceKey;
+        //this.ExerciceKey = exerciceKey;
         this.desc=desc;
     }
 
@@ -44,24 +44,16 @@ public class Exercice {
         this.serie = serie;
     }
 
-    public String getExerciceKey() {
+    /* ----------public String getExerciceKey() {
         return ExerciceKey;
     }
 
     public void setExerciceKey(String exerciceKey) {
         ExerciceKey = exerciceKey;
-    }
+    }  ----------- */
 
     public String getDesc(){
         return desc;
     }
 
-    @Override
-    public String toString() {
-        return "Exercice{" +
-                "titre='" + titre + '\'' +
-                ", reps=" + reps +
-                ", serie=" + serie +
-                '}';
-    }
 }

@@ -13,6 +13,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -63,23 +65,17 @@ public class HomeFragment extends ListFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        ListView lv = (ListView) getView().findViewById(R.id.lv);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                Intent nextActivity = new Intent(getContext(),ListeExos.class);
-                startActivity(nextActivity);
-            }
+        RecyclerView lv = (RecyclerView) getView().findViewById(R.id.lv);
 
-        });
 
         final PersistanceTraining db = new PersistanceTraining(getContext());
         db.initData();
         listes.clear();
         listes=db.getAllEntrainements();
 
-        final AdapterListeEntrainement adapt = new AdapterListeEntrainement(getContext(), R.layout.liste_entrainements,listes);
+        final AdapterListeEntrainement adapt = new AdapterListeEntrainement(getActivity(),listes);
+        lv.setLayoutManager(new LinearLayoutManager(getActivity()));
+
 
         lv.setAdapter(adapt);
 

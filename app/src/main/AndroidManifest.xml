@@ -29,7 +29,8 @@
         <activity android:name=".Main3Activity" />
         <activity android:name=".list" />
         <activity android:name=".ui.home.ExoFragment" />
-        <activity android:name=".ListeExos"></activity>
+        <activity android:name=".ListeExos" />
+        <activity android:name=".DetailExo"></activity>
     </application>
 
 </manifest>

@@ -41,6 +41,9 @@ public class EntrainementPersistance extends SQLiteOpenHelper {
     private static final String ATTRIBUT_SERIE = "serie";
     private static final String ATTRIBUT_DESCRIPTION_EXO="des_exo";
 
+    private static final String TABLE_PROGRAMME ="programme";
+
+
 
 
     public EntrainementPersistance(Context context ) {
@@ -70,6 +73,13 @@ public class EntrainementPersistance extends SQLiteOpenHelper {
                         ATTRIBUT_SERIE + " INTEGER," +
                         ATTRIBUT_DESCRIPTION_EXO + "VARCHAR)";
         db.execSQL(table_exercice_create);
+
+        final String table_programme_create =
+                "CREATE TABLE "+ TABLE_PROGRAMME +"("+
+                        ATTRIBUT_KEY + "INTEGER, "+
+                        ATTRIBUT_KEY_ID_EXERCICES + "INTERGER)";
+        db.execSQL(table_programme_create);
+
 
     }
 
