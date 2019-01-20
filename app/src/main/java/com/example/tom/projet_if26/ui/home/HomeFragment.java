@@ -95,11 +95,11 @@ public class HomeFragment extends ListFragment {
                 }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ListeEntrainement entree = new ListeEntrainement(nom.getText().toString(),0,desc.getText().toString());
-                        db.addEntrainement(entree);
+                        db.addEntrainement(nom.getText().toString(),desc.getText().toString());
                         dialog.dismiss();
                         adapt.notifyDataSetChanged();
                         Intent myIntent = new Intent(getContext(), ListeExos.class);
+                        myIntent.putExtra("ID",""+getId());
                         getContext().startActivity(myIntent);
 
 

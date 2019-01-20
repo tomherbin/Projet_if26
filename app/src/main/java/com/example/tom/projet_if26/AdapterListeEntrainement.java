@@ -43,21 +43,16 @@ public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeE
         viewHolder.description.setText(listes.getDescription());
 
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
-            String selectQuery = "SELECT cle FROM entrainement WHERE "
-            PersistanceTraining db = new PersistanceTraining(context);
-            SQLiteDatabase bdd = db.getReadableDatabase();
-            Cursor cursor =bdd.rawQuery(selectQuery,null);
+
             @Override
             public void onClick(View v) {
-                //id = listes.getId();
+                id = listes.getID();
                 passData(id);
-
-
             }
         });
 
     }
-    public void passData(int a){
+    public void passData(int id){
         Intent intent = new Intent (context ,ListeExos.class);
         intent.putExtra("ID",""+id);
         context.startActivity(intent);

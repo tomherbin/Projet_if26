@@ -19,7 +19,7 @@ import java.util.Iterator;
 public class EntrainementPersistance extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     // nom du fichier pour la base
     public static final String DATABASE_NAME = "Training.db";
     // nom de la table
@@ -84,7 +84,9 @@ public class EntrainementPersistance extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRAINEMENT);
+        db.execSQL("DROP TABLE  " + TABLE_ENTRAINEMENT);
+        db.execSQL("DROP TABLE " + TABLE_EXERCICE);
+        db.execSQL("DROP TABLE " + TABLE_PROGRAMME);
         onCreate(db);
     }
 
@@ -115,8 +117,8 @@ public class EntrainementPersistance extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do{
-                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2),cursor.getString(3)));
-            }while(cursor.moveToNext());
+                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2),cursor.getString(4)));
+                listes.get(listes.size()-1).setID(cursor.getInt(0));            }while(cursor.moveToNext());
         }
         bdd.close();
         return listes;

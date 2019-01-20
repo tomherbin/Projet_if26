@@ -4,6 +4,7 @@ public class ListeEntrainement {
     private String titre;
     private int repetition;
     private String description;
+    private int ID;
 
     public int getRepetition() {
         return repetition;
@@ -13,10 +14,12 @@ public class ListeEntrainement {
         this.repetition = repetition;
     }
 
-    public ListeEntrainement(String titre, int repetition,String description){
+    public ListeEntrainement(String titre, int repetition,String description,int ID){
         this.titre=titre;
         this.repetition=repetition;
         this.description=description;
+        this.ID=ID;
+
     }
 
     public String getTitre() {
@@ -29,6 +32,14 @@ public class ListeEntrainement {
 
     public void setTitre(String titre) {
         this.titre = titre;
+    }
+
+    public int getID(){
+        return ID;
+    }
+    public void setID(int a){
+        this.ID = a;
+
     }
 
 }

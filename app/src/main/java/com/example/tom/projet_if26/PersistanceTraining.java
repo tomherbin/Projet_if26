@@ -10,7 +10,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class PersistanceTraining extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     // nom du fichier pour la base
     public static final String DATABASE_NAME = "Entrainement.db";
     // nom de la table
@@ -68,15 +68,17 @@ public class PersistanceTraining extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENTRAINEMENT);
+        db.execSQL("DROP TABLE  " + TABLE_ENTRAINEMENT);
+        db.execSQL("DROP TABLE " + TABLE_EXERCICE);
+        db.execSQL("DROP TABLE " + TABLE_PROGRAMME);
         onCreate(db);
     }
 
-    public void addEntrainement(ListeEntrainement nom) {
+    public void addEntrainement(String nom, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ATTRIBUT_TITRE_ENTRAINEMENT, nom.getTitre());
-        values.put(ATTRIBUT_DESCRIPTION_ENT, nom.getDescription());
+        values.put(ATTRIBUT_TITRE_ENTRAINEMENT, nom);
+        values.put(ATTRIBUT_DESCRIPTION_ENT, desc);
         values.put(ATTRIBUT_REPETITION,0);
         db.insert(TABLE_ENTRAINEMENT, null, values);
         db.close();
@@ -97,7 +99,7 @@ public class PersistanceTraining extends SQLiteOpenHelper {
     public void initData(){
         PredefiniEntrainement liste = new PredefiniEntrainement();
         for (ListeEntrainement l : liste.getListe()){
-            addEntrainement(l);
+            addEntrainement(l.getTitre(),l.getDescription());
         }
        ExerciceGenerator listeExo = new ExerciceGenerator();
         for(Exercice exo: listeExo.getExercices()){
@@ -114,7 +116,7 @@ public class PersistanceTraining extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do{
-                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2),cursor.getString(4)));
+                listes.add(new ListeEntrainement(cursor.getString(1),cursor.getInt(2),cursor.getString(3),cursor.getInt(0)));
             }while(cursor.moveToNext());
         }
         bdd.close();
