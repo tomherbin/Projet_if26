@@ -1,40 +1,26 @@
 package com.example.tom.projet_if26.ui.home;
 
-import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.tom.projet_if26.AdapterListeEntrainement;
-import com.example.tom.projet_if26.Entrainement;
-import com.example.tom.projet_if26.EntrainementPersistance;
-import com.example.tom.projet_if26.Home;
 import com.example.tom.projet_if26.ListeEntrainement;
 import com.example.tom.projet_if26.ListeExos;
-import com.example.tom.projet_if26.MainActivity;
 import com.example.tom.projet_if26.PersistanceTraining;
-import com.example.tom.projet_if26.PredefiniEntrainement;
 import com.example.tom.projet_if26.R;
 
 import java.util.ArrayList;
@@ -87,6 +73,7 @@ public class HomeFragment extends ListFragment {
                 View mView= getLayoutInflater().inflate(R.layout.dialog_entre,null);
                 final EditText nom= (EditText) mView.findViewById(R.id.editNom);
                 final EditText desc = (EditText) mView.findViewById(R.id.editDesc);
+
                 mBuilder.setView(mView).setTitle("Ajouter entrainement").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -95,11 +82,27 @@ public class HomeFragment extends ListFragment {
                 }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         db.addEntrainement(nom.getText().toString(),desc.getText().toString());
-                        dialog.dismiss();
+                        final SQLiteDatabase bdd= db.getReadableDatabase();
+
+                        Cursor cursor= bdd.rawQuery("SELECT * FROM entrainement",null);
+                        int i=0;
+                        if (cursor!=null&&cursor.moveToFirst()){
+                            do{
+                            i=cursor.getInt(cursor.getColumnIndex("cle"));
+                            }while(cursor.moveToNext());
+                        }
+                        bdd.close();
+
+                       ListeEntrainement le = new ListeEntrainement(nom.getText().toString(),0,desc.getText().toString(),i);
+                        listes.add(le);
                         adapt.notifyDataSetChanged();
+                        dialog.dismiss();
+
+
                         Intent myIntent = new Intent(getContext(), ListeExos.class);
-                        myIntent.putExtra("ID",""+getId());
+                        myIntent.putExtra("ID",+i);
                         getContext().startActivity(myIntent);
 
 

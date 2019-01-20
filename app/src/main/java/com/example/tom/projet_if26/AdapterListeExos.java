@@ -44,7 +44,7 @@ public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.View
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (context ,DetailExo.class);
-                //intent.putExtra(DetailExo.EXTRA_EXERCICE,exercice);
+                intent.putExtra("exo",""+exercice);
                 context.startActivity(intent);
             }
         });

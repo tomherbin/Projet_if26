@@ -14,5 +14,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="28dp"
+        android:accessibilityTraversalBefore="@+id/lv"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add_white_24dp"
+        android:visibility="visible"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="ajouter"/>
+
 
 </android.support.constraint.ConstraintLayout>

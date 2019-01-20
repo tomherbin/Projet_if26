@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
@@ -15,17 +16,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="104dp"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/schema"
-                android:layout_width="143dp"
-                android:layout_height="79dp" />
+                android:layout_width="128dp"
+                android:layout_height="match_parent" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="202dp"
+                android:layout_height="90dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical">
@@ -34,28 +35,27 @@
                     android:id="@+id/nomExo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="Nom"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:gravity="center"/>
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="68dp"
                     android:gravity="start"
                     android:orientation="horizontal"
                     android:paddingTop="3dp"
                     android:paddingBottom="6dp">
 
                     <TextView
-                        android:id="@+id/desc_exo"
+                        android:id="@+id/ajo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Description"
-                        android:textColor="@color/colorBasicText"
-                        android:gravity="center"/>
+                        android:gravity="center"
+                        android:text="Ajouter" />
                 </LinearLayout>
 
             </LinearLayout>

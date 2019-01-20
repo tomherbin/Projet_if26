@@ -5,19 +5,16 @@ public class Exercice {
     private String titre;
     private int reps;
     private int serie;
-    //private String ExerciceKey;
     private String desc;
+    private int ID;
 
-    public Exercice(String titre) {
-        this.titre = titre;
-    }
 
-    public Exercice(String titre, int reps, int serie, String desc) {
+    public Exercice(String titre, int reps, int serie, String desc,int ID) {
         this.titre = titre;
         this.reps = reps;
         this.serie = serie;
-        //this.ExerciceKey = exerciceKey;
         this.desc=desc;
+        this.ID=ID;
     }
 
     public String getTitre() {
@@ -44,16 +41,15 @@ public class Exercice {
         this.serie = serie;
     }
 
-    /* ----------public String getExerciceKey() {
-        return ExerciceKey;
-    }
-
-    public void setExerciceKey(String exerciceKey) {
-        ExerciceKey = exerciceKey;
-    }  ----------- */
-
     public String getDesc(){
         return desc;
+    }
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
 }

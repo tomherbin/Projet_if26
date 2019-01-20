@@ -37,6 +37,8 @@ public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeE
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+
+
         final ListeEntrainement listes = liste.get(position);
         viewHolder.titre.setText(listes.getTitre());
         viewHolder.compteur.setText(String.valueOf(listes.getRepetition()));
@@ -54,7 +56,7 @@ public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeE
     }
     public void passData(int id){
         Intent intent = new Intent (context ,ListeExos.class);
-        intent.putExtra("ID",""+id);
+        intent.putExtra("ID",id);
         context.startActivity(intent);
     }
 

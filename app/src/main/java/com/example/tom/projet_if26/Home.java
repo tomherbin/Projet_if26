@@ -26,7 +26,7 @@ import java.util.List;
 public class Home extends AppCompatActivity {
     private ListView lv;
     private FloatingActionButton add;
-    private EntrainementPersistance bdd;
+
 
 
     @Override

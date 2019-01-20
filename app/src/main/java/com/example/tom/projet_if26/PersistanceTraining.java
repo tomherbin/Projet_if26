@@ -7,12 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PersistanceTraining extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 1;
     // nom du fichier pour la base
-    public static final String DATABASE_NAME = "Entrainement.db";
+    public static final String DATABASE_NAME = "Entrainements.db";
     // nom de la table
     private static final String TABLE_ENTRAINEMENT = "entrainement";
     // liste des attributs
@@ -33,7 +34,7 @@ public class PersistanceTraining extends SQLiteOpenHelper {
     private static final String ATTRIBUT_EXERCICEKEY = "exerciceKey";
     private static final String ATTRIBUT_REPS = "reps";
     private static final String ATTRIBUT_SERIE = "serie";
-    private static final String ATTRIBUT_DESCRIPTION_EXO="des_exo";
+    private static final String ATTRIBUT_DESCRIPTION_EXO="descexo";
 
 
     public PersistanceTraining(Context context){
@@ -51,12 +52,11 @@ public class PersistanceTraining extends SQLiteOpenHelper {
 
      final String table_exercice_create =
                 "CREATE TABLE " + TABLE_EXERCICE + "(" +
-                        ATTRIBUT_EXERCICEKEY + " INTEGER primary key autoincrement,"  +
+                        ATTRIBUT_EXERCICEKEY + " INTEGER primary key ,"  +
                         ATTRIBUT_TITRE_EXERCICE + " TEXT, " +
                         ATTRIBUT_REPS + " INTEGER, " +
-                        ATTRIBUT_SERIE + " INTEGER," +
-                        ATTRIBUT_DESCRIPTION_EXO + "VARCHAR" +
-                        ")";
+                        ATTRIBUT_SERIE + " INTEGER, " +
+                        ATTRIBUT_DESCRIPTION_EXO + " VARCHAR)";
         db.execSQL(table_exercice_create);
 
         final String table_programme_create =
@@ -68,9 +68,9 @@ public class PersistanceTraining extends SQLiteOpenHelper {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE  " + TABLE_ENTRAINEMENT);
-        db.execSQL("DROP TABLE " + TABLE_EXERCICE);
-        db.execSQL("DROP TABLE " + TABLE_PROGRAMME);
+        db.execSQL("DROP TABLE IF EXISTS  " + TABLE_ENTRAINEMENT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCICE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROGRAMME);
         onCreate(db);
     }
 
@@ -84,13 +84,14 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void generateExos(Exercice exo){
+    public void addExercice(String titre, int reps, String desc, int serie,int id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ATTRIBUT_TITRE_EXERCICE,exo.getTitre());
-        values.put(ATTRIBUT_REPS,exo.getReps());
-        values.put(ATTRIBUT_DESCRIPTION_EXO,exo.getDesc());
-        values.put(ATTRIBUT_SERIE,exo.getSerie());
+        values.put(ATTRIBUT_TITRE_EXERCICE,titre);
+        values.put(ATTRIBUT_REPS,reps);
+        values.put(ATTRIBUT_DESCRIPTION_EXO,desc);
+        values.put(ATTRIBUT_SERIE,serie);
+        values.put(ATTRIBUT_EXERCICEKEY,id);
 
         db.insert(TABLE_EXERCICE, null, values);
         db.close();
@@ -102,10 +103,9 @@ public class PersistanceTraining extends SQLiteOpenHelper {
             addEntrainement(l.getTitre(),l.getDescription());
         }
        ExerciceGenerator listeExo = new ExerciceGenerator();
-        for(Exercice exo: listeExo.getExercices()){
-            generateExos(exo);
+        for(Exercice exo: listeExo.getListeExo()){
+            addExercice(exo.getTitre(),exo.getReps(),exo.getDesc(),exo.getSerie(),exo.getID());
         }
-
     }
     public ArrayList<ListeEntrainement>getAllEntrainements(){
         ArrayList<ListeEntrainement> listes = new ArrayList<ListeEntrainement>();
@@ -131,11 +131,38 @@ public class PersistanceTraining extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do{
-                listes.add(new Exercice(cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4)));
+                listes.add(new Exercice(cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getInt(0)));
             }while(cursor.moveToNext());
         }
         bdd.close();
         return listes;
+    }
+
+    public ArrayList<Exercice>getExerciceProg(int a){
+        ArrayList<Exercice> listeProg= new ArrayList<>();
+        String selectQuery = "SELECT * FROM "+ TABLE_EXERCICE + " ex, "+ TABLE_PROGRAMME +
+                "  p WHERE p."+ ATTRIBUT_ID_EPROG +"= "+a+ " AND ex."+ATTRIBUT_EXERCICEKEY+"= p."+ATTRIBUT_ID_EXPROG;
+
+
+        SQLiteDatabase bdd= this.getReadableDatabase();
+        Cursor cursor = bdd.rawQuery(selectQuery,null);
+        if (cursor!=null&&cursor.moveToFirst()){
+            do{
+                listeProg.add(new Exercice(cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getString(4),cursor.getInt(0)));
+            }while(cursor.moveToNext());
+        }
+        bdd.close();
+        return (listeProg == null) ? listeProg:listeProg;
+    }
+
+    public void addExerciceList(Exercice a,int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ATTRIBUT_ID_EXPROG,a.getID());
+        values.put(ATTRIBUT_ID_EPROG,id);
+        db.insert(TABLE_PROGRAMME,null,values);
+
+        db.close();
     }
 
 }
