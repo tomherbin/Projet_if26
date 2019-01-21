@@ -62,8 +62,8 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         final String table_programme_create =
 
                 "CREATE TABLE "+ TABLE_PROGRAMME + "(cleE INTEGER, cleEX INTEGER, " +
-                        "PRIMARY KEY(cleE, cleEX ), FOREIGN KEY (cleE) references entrainement (cle)" +
-                        ",FOREIGN KEY (cleEx) references exercice (exerciceKey))";
+                        "PRIMARY KEY(cleE, cleEX ), CONSTRAINT fk_entre FOREIGN KEY (cleE) references entrainement (cle) ON DELETE CASCADE" +
+                        ",CONSTRAINT fk_Exeo FOREIGN KEY (cleEx) references exercice (exerciceKey) ON DELETE CASCADE)";
         db.execSQL(table_programme_create);
     }
 

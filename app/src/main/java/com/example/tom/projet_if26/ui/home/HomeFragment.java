@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,8 @@ public class HomeFragment extends ListFragment {
         return new HomeFragment();
     }
     private ArrayList<ListeEntrainement> listes;
+    private SQLiteDatabase sqLiteDatabase;
+    private PersistanceTraining db;
 
 
     public HomeFragment() {
@@ -55,7 +59,7 @@ public class HomeFragment extends ListFragment {
         RecyclerView lv = (RecyclerView) getView().findViewById(R.id.lv);
 
 
-        final PersistanceTraining db = new PersistanceTraining(getContext());
+         db = new PersistanceTraining(getContext());
         db.initData();
         listes.clear();
         listes=db.getAllEntrainements();
@@ -107,9 +111,9 @@ public class HomeFragment extends ListFragment {
                             getContext().startActivity(myIntent);
                         }
                         else if(!nom.getText().toString().equals("")&&desc.getText().toString().equals("")) {
-                            Toast.makeText(getContext(),"Veuillez entrer un nom !",Toast.LENGTH_SHORT).show();
-                        }else if(nom.getText().toString().equals("")&&!desc.getText().toString().equals("")) {
                             Toast.makeText(getContext(),"Veuillez entrer une description !",Toast.LENGTH_SHORT).show();
+                        }else if(nom.getText().toString().equals("")&&!desc.getText().toString().equals("")) {
+                            Toast.makeText(getContext(),"Veuillez entrer un nom !",Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -118,7 +122,23 @@ public class HomeFragment extends ListFragment {
                 dialog.show();
             }
         });
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
 
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+                int idE= (int) viewHolder.itemView.getTag();
+                removeEntrainement(idE);
+
+            }
+        }).attachToRecyclerView(lv);
     }
-
+    public boolean removeEntrainement(int idE){
+        sqLiteDatabase = db.getWritableDatabase();
+        return sqLiteDatabase.delete(PersistanceTraining.TABLE_ENTRAINEMENT,PersistanceTraining.ATTRIBUT_KEY+"="+idE
+               ,null)>0;
+    }
 }

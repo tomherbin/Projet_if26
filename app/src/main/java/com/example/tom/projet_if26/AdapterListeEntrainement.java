@@ -43,6 +43,7 @@ public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeE
         viewHolder.titre.setText(listes.getTitre());
         viewHolder.compteur.setText(String.valueOf(listes.getRepetition()));
         viewHolder.description.setText(listes.getDescription());
+        viewHolder.itemView.setTag(listes.getID());
 
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
 

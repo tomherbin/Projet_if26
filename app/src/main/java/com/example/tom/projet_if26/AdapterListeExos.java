@@ -49,6 +49,7 @@ public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.View
         viewHolder.nomExo.setText(exercice.getTitre());
 
         viewHolder.descExo.setText("Nombre de répétitions :"+exercice.getReps()+"\n Nombre de séries : " +exercice.getSerie());
+        viewHolder.itemView.setTag(exercice.getID());
         AssetManager assetManager = context.getAssets();
         try {
             InputStream ims = assetManager.open(exercice.getTitre()+".png");
