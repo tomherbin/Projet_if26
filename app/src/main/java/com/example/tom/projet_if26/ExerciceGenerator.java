@@ -25,6 +25,7 @@ public void init(){
     ajoute(new Exercice("WallBall",10,3,"Lancer un ballon lourd en face de vous",3));
     ajoute(new Exercice("Traction",10,3,"La traction est un exercice physique consistant à hisser ses épaules au niveau d'une barre en la tenant par les mains. Les tractions ont pour objectif principal le développement des muscles du dos et des bras.",4));
     ajoute(new Exercice("Squat",10,3," Mouvement d'accroupi qui constitue un exercice poly-articulaire de force et de musculation ciblant les muscles de la cuisse et des fessiers",5));
+    ajoute((new Exercice("Abdominaux",15,3,"Exercices pour muscler les abdominaux",6)));
 }
 
 public void ajoute(Exercice e){

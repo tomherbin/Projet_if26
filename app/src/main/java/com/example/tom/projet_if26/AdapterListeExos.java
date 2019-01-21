@@ -3,8 +3,10 @@ package com.example.tom.projet_if26;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.graphics.Movie;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -17,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -45,6 +49,14 @@ public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.View
         viewHolder.nomExo.setText(exercice.getTitre());
 
         viewHolder.descExo.setText("Nombre de répétitions :"+exercice.getReps()+"\n Nombre de séries : " +exercice.getSerie());
+        AssetManager assetManager = context.getAssets();
+        try {
+            InputStream ims = assetManager.open(exercice.getTitre()+".png");
+            Drawable d = Drawable.createFromStream(ims, null);
+            viewHolder.image.setImageDrawable(d);
+        } catch (IOException ex) {
+            return;
+        }
 
 
         viewHolder.parentView.setOnClickListener(new View.OnClickListener() {
