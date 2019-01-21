@@ -5,6 +5,10 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
+/**
+ * Classe Exercice contient les attributs d'un exercice. Implémente Parcelable
+ * pour mieux transiter les informations.
+ */
 public class Exercice implements Parcelable {
 
     private String titre;
@@ -22,50 +26,67 @@ public class Exercice implements Parcelable {
         this.ID=ID;
     }
 
+    /**
+     * Constructeur iterface Parcelable
+     * @param in
+     */
     public Exercice(Parcel in){
         readFromParcel(in);
     }
 
+    /**
+     * Getter titre
+     * @return le titre de l'exercice
+     */
     public String getTitre() {
         return titre;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
+    /**
+     * Getter Répétition
+     * @return le nombre de répétition d'un exercice
+     */
     public int getReps() {
         return reps;
     }
 
-    public void setReps(int reps) {
-        this.reps = reps;
-    }
-
+    /**
+     * Getter série
+     * @return le nombre de séries d'un exercice
+     */
     public int getSerie() {
         return serie;
     }
 
-    public void setSerie(int serie) {
-        this.serie = serie;
-    }
-
+    /**
+     * Getter description
+     * @return la description d'un exercice
+     */
     public String getDesc(){
         return desc;
     }
+    /**
+     * Getter id
+     * @return l'id d'un exercice
+     */
     public int getID() {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
+    /**
+     * Méthode Parcelable
+     * @return 0
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Ajoute dans parcel, les valeurs que nous voulons envoyer
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(titre);
@@ -74,6 +95,11 @@ public class Exercice implements Parcelable {
         dest.writeString(desc);
         dest.writeInt(ID);
     }
+
+    /**
+     * Lit le contenu de l'attribut
+     * @param in
+     */
     public void readFromParcel(Parcel in){
         titre = in.readString();
         reps =  in.readInt();

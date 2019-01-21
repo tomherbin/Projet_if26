@@ -23,6 +23,10 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activité qui s'affiche dès l'ouverture de l'application, dirige l'utilisateur vers le fragment
+ * liste exercice
+ */
 public class Home extends AppCompatActivity {
     private ListView lv;
     private FloatingActionButton add;

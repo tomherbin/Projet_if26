@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Interface à propos
+ */
 public class Propos extends AppCompatActivity {
     private ImageView banniere;
 

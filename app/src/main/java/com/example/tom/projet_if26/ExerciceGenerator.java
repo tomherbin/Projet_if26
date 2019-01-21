@@ -4,11 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-/*private String titre;
-private int reps;
-private int serie;
-private String ExerciceKey;
-private String desc;*/
+/**
+ * Classe qui génère les exercices prédéfinies de l'application
+ */
 public class ExerciceGenerator {
 private ArrayList<Exercice> listeExo;
     public ExerciceGenerator(){
@@ -16,7 +14,11 @@ private ArrayList<Exercice> listeExo;
         init();
 
 }
-public void init(){
+
+    /**
+     * Initialise les objets.
+     */
+    public void init(){
         ajoute(new Exercice("Pompe",10,3,"Inspirer et fléchir les bras pour amener la cage thoracique près du sol sans creuser la région lornbaire. Un travail préalable de musculation statique en gainage permet de mieux sentir cette position \"corps droit\" sans cambrure et sans fesses pointant vers le haut.\n" +
                 "Pousser jusqu'à l'extension cornplète des bras en gardant toujours le corps bien gainé et droit\n" +
                 "Expirer profondément en fin de mouvement en rentrant le ventre sous le nombril pour renforcer aussi les muscles abdominaux profonds.",0));
@@ -29,10 +31,19 @@ public void init(){
     ajoute((new Exercice("Abdominaux",15,5,"Exercices pour muscler les abdominaux",6)));
 }
 
-public void ajoute(Exercice e){
+    /**
+     * Ajoute dans une liste d'exercice un exercice créé
+     * @param e l'exercice à ajouter
+     */
+    public void ajoute(Exercice e){
         listeExo.add(e);
 }
-public ArrayList<Exercice>getListeExo(){
+
+    /**
+     * Récupère la liste d'exercice
+     * @return liste d'exercice
+     */
+    public ArrayList<Exercice>getListeExo(){
         return listeExo;
 }
 }

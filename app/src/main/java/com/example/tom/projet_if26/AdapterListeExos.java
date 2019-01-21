@@ -25,11 +25,20 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Adaptateur de la liste des exercices sélectionné dans un programme d'entrainement
+ * Adapte les données dans un recyclerView
+ */
 public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.ViewHolder> {
     ArrayList<Exercice> exos;
     private Context context;
     private Cursor cursor;
 
+    /**
+     * Constructeur de l'adaptateur
+     * @param context contexte
+     * @param data Liste d'exercice
+     */
     public AdapterListeExos (Context context, ArrayList<Exercice> data){
         this.exos=data;
         this.context=context;
@@ -41,6 +50,11 @@ public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.View
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.liste_exos, parent, false));
     }
 
+    /**
+     * Attribuer les valeurs aux composants de la vue avec les attributs de l'adaptateur.
+     * @param viewHolder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
@@ -72,12 +86,18 @@ public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.View
 
     }
 
+    /**
+     * Compte le nombre d'objets dans une liste d'exercice
+     * @return la taille de la liste
+     */
     @Override
     public int getItemCount() {
         return (this.exos == null) ? 0 : this.exos.size();
     }
 
-
+    /**
+     * Attribution des attributs aux composants
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nomExo;
         private TextView descExo;

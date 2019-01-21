@@ -19,6 +19,10 @@ import com.example.tom.projet_if26.ui.search.SearchFragment;
 
 import java.util.ArrayList;
 
+/**
+ * Classe pour la barre de navigation. Activité qui affiche les fragments Entrainements,
+ * REchercher et Profil
+ */
 public class MainActivity extends AppCompatActivity {
 
 

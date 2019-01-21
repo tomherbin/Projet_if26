@@ -18,12 +18,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+/**
+ * Adaptateur de la liste des exercices proposées dans l'application. Affichage des données de l'exercices
+ * dans un RecyclerView.
+ */
 public class AdapterExercicePredefini extends RecyclerView.Adapter<AdapterExercicePredefini.ViewHolder>{
     private Context context;
     private ArrayList<Exercice> liste;
     private int idEntrainement;
     Exercice listes;
 
+    /**
+     * Constructeur de l'adaptateur
+     * @param context contexte
+     * @param objects liste d'exercice
+     * @param id id d'entrainement
+     */
     public AdapterExercicePredefini(Context context, ArrayList<Exercice> objects,int id) {
         this.context = context;
         this.liste=objects;
@@ -37,6 +47,9 @@ public class AdapterExercicePredefini extends RecyclerView.Adapter<AdapterExerci
     }
 
     @Override
+    /**
+     * Insertion des données dans l'interface graphique
+     */
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
        final Exercice listes = liste.get(position);
         viewHolder.titre.setText(listes.getTitre());
@@ -59,12 +72,18 @@ public class AdapterExercicePredefini extends RecyclerView.Adapter<AdapterExerci
 
     }
 
+    /**
+     * Compte le nombre d'objets dans une liste, si elle est nulle renvoie 0
+     * @return la taille de la liste
+     */
     @Override
     public int getItemCount() {
         return (this.liste == null) ? 0 : this.liste.size();
     }
 
-
+    /**
+     * Attribution des attributs aux composants de la vue
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView titre;
         private TextView ajouter;

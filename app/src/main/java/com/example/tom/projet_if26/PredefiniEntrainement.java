@@ -5,6 +5,9 @@ import com.example.tom.projet_if26.ListeEntrainement;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * Classe des entrainements
+ */
 public class PredefiniEntrainement {
     private ArrayList<ListeEntrainement>profil;
 

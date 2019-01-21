@@ -17,6 +17,10 @@ import com.example.tom.projet_if26.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
+/**
+ * Interface qui affiche la liste d'exercices que l'on choisit précédemment.
+ * Affiche la liste d'exercice d'un entrainement dont nous avons récupéré l'ID
+ */
 public class ListeExos extends AppCompatActivity {
     private ArrayList<Exercice> exos;
     private RecyclerView rv;
@@ -67,11 +71,22 @@ public class ListeExos extends AppCompatActivity {
 
 
         }
-public void ajouter(View v){
+
+    /**
+     * Appel à cette méthode quand l'utilisateur appuie sur le bouton ajouter
+     * Affiche la liste d'exercice prédéfini
+     * @param v vue
+     */
+    public void ajouter(View v){
         Intent intent = new Intent(this,ExercicePredefini.class);
         intent.putExtra("ID",id);
         startActivity(intent);
     }
+
+    /**
+     * Dès lors que l'on retourne à cette fenêtre depuis la description de l'exercice ou la liste
+     * prédéfinie
+     */
     public void onResume(){
         super.onResume();
         Intent intent = getIntent();
@@ -86,7 +101,14 @@ public void ajouter(View v){
         rv.setAdapter(new AdapterListeExos(this,exos));
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
-public boolean removeExercice(int idE,int id){
+
+    /**
+     * Swipe gauche ou droite pour le retirer de la table Programme
+     * @param idE ID de l'exercice
+     * @param id ID de l'entrainement
+     * @return true si la requete fonctionne
+     */
+    public boolean removeExercice(int idE,int id){
         sqLiteDatabase = db.getWritableDatabase();
         return sqLiteDatabase.delete(PersistanceTraining.TABLE_PROGRAMME,PersistanceTraining.ATTRIBUT_ID_EXPROG+"="+idE
                 +" AND "+PersistanceTraining.ATTRIBUT_ID_EPROG+"="+id,null)>0;

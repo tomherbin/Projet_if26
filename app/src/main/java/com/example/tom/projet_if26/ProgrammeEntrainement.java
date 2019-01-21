@@ -2,6 +2,10 @@ package com.example.tom.projet_if26;
 
 import java.util.ArrayList;
 
+/**
+ * Classe d'un programme d'entrainement
+ */
+
 public class ProgrammeEntrainement {
 
 

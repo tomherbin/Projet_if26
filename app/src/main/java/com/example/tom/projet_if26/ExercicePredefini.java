@@ -13,6 +13,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * Affichage de la liste prédéfinie des exercices. Récupère les informations dans la base de données;
+ * Laisse l'adapteur placer chaque exercice pour la recyclerView.
+ */
 public class ExercicePredefini extends AppCompatActivity {
 private ArrayList<Exercice>exos;
 private RecyclerView rv;

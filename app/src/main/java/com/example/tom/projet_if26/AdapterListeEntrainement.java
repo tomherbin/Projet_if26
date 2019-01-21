@@ -18,12 +18,21 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Adaptateur de la liste d'entrainement qui affiche le nom de chaque entrainement.
+ * Affiche dans un RecyclerView le nom et une description
+ */
 public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeEntrainement.ViewHolder> {
     private Context context;
     int resource;
     ArrayList<ListeEntrainement>liste;
     private int id;
 
+    /**
+     * Constructeur de l'adaptateur
+     * @param context contexte
+     * @param objects liste d'entrainements d'objets
+     */
     public AdapterListeEntrainement(Context context, ArrayList<ListeEntrainement> objects) {
         this.context = context;
         this.liste=objects;
@@ -55,6 +64,12 @@ public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeE
         });
 
     }
+
+    /**
+     * Créer un intent pour afficher la liste des exercices choisies tout en envoyant
+     * l'id de l'entrainement à cette fenêtre.
+     * @param id id de l'entrainement
+     */
     public void passData(int id){
         Intent intent = new Intent (context ,ListeExos.class);
         intent.putExtra("ID",id);
@@ -66,7 +81,9 @@ public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeE
         return (this.liste == null) ? 0 : this.liste.size();
     }
 
-
+    /**
+     * Attribution des attributs aux composants de la vue.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView titre;
         private TextView compteur;

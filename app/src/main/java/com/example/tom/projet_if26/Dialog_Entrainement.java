@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+/**
+ * Boite de dialogue pour entrer un nouvel entrainement dans la base.
+ */
 public class Dialog_Entrainement extends AppCompatDialogFragment {
     private EditText editNom;
 

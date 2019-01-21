@@ -18,6 +18,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+/**
+ * Fenêtre affichant le détail d'un exercice qu'on choisit dans sa liste d'exercice.
+ * Contient une image,une description, un minuteur de 1min30, le nombre de répétitions et séries.
+ */
 public class DetailExo extends AppCompatActivity implements Serializable {
     private static final long START_TIME_IN_MILLIS =90000;
     private ImageView img;
@@ -55,6 +59,10 @@ public class DetailExo extends AppCompatActivity implements Serializable {
         desc.setText(ex.getDesc()+"\n \n \n Nombre de séries: "+ex.getSerie()+"\n Nombre de répétitions: "+ex.getReps());
     }
 
+    /**
+     * Méthode pour démarrer le minuteur
+     * @param v vue
+     */
     public void start(View v){
         if(timerRunning){
             pauseTimer();
@@ -62,9 +70,19 @@ public class DetailExo extends AppCompatActivity implements Serializable {
             startTimer();
         }
     }
+
+    /**
+     * Réinstialiser le minuteur
+     * @param v vue
+     */
     public void resetTimer(View v){
         reset();
     }
+
+    /**
+     * Démarrer le décomptage, actualise le texte chaque seconde. A la fin du temps
+     * on réintialise.
+     */
     private void startTimer(){
         countDownTimer = new CountDownTimer(mtimeleft,100) {
             @Override
@@ -84,22 +102,41 @@ public class DetailExo extends AppCompatActivity implements Serializable {
         reset.setClickable(false);
 
     }
+
+    /**
+     * Met à jour le texte qui affiche le minuteur. Prend la durée qui reste puis convertit
+     * en minute et le reste en seconde.
+     */
     private void updateCountDownText(){
         int minutes = (int) (mtimeleft/1000) /60;
         int seconds = (int) (mtimeleft/1000)%60;
         String timeleft = String.format("%02d:%02d",minutes,seconds);
         timer.setText(timeleft);
     }
+
+    /**
+     * Remet à 1min30 le minuteur
+     */
     private void reset(){
         mtimeleft=START_TIME_IN_MILLIS;
         updateCountDownText();
 
     }
+
+    /**
+     * Met en pause le minuteur
+     */
     public void pauseTimer(){
         countDownTimer.cancel();
         timerRunning=false;
         reset.setClickable(true);
     }
+
+    /**
+     * Permet de retourner à l'activité parent qui est la liste d'entrainement
+     * @param item bouton retour
+     * @return l'objet sélectionné
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 

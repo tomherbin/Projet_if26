@@ -10,6 +10,9 @@ import android.util.Log;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Base de données de l'application. 3 tables sont créées pour la gestion Entrainement/Exercice
+ */
 public class PersistanceTraining extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     // nom du fichier pour la base
@@ -45,7 +48,6 @@ public class PersistanceTraining extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_ENTRAINEMENT + "(" +
                         ATTRIBUT_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         ATTRIBUT_TITRE_ENTRAINEMENT + " VARCHAR," +
-                        ATTRIBUT_REPETITION + " INTEGER," +
                         ATTRIBUT_DESCRIPTION_ENT + " VARCHAR)";
 
         db.execSQL(table_entrainement_create);
@@ -67,6 +69,12 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         db.execSQL(table_programme_create);
     }
 
+    /**
+     * Recréer les tables dès lors qu'on modifie la base de données
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS  " + TABLE_ENTRAINEMENT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCICE);
@@ -74,6 +82,11 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Ajoute un entrainement dans la base de données
+     * @param nom
+     * @param desc
+     */
     public void addEntrainement(String nom, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -84,6 +97,14 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Ajoute un exercice dans la base de données
+     * @param titre nom de l'exercice
+     * @param reps nombre de répétitons
+     * @param desc description de l'exercice
+     * @param serie nombre de séries
+     * @param id id de l'exercice
+     */
     public void addExercice(String titre, int reps, String desc, int serie,int id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -97,6 +118,9 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Initialise la table
+     */
     public void initData(){
         PredefiniEntrainement liste = new PredefiniEntrainement();
         for (ListeEntrainement l : liste.getListe()){
@@ -107,6 +131,11 @@ public class PersistanceTraining extends SQLiteOpenHelper {
             addExercice(exo.getTitre(),exo.getReps(),exo.getDesc(),exo.getSerie(),exo.getID());
         }
     }
+
+    /**
+     * Requete dans la table Entrainement
+     * @return tous les entrainements
+     */
     public ArrayList<ListeEntrainement>getAllEntrainements(){
         ArrayList<ListeEntrainement> listes = new ArrayList<ListeEntrainement>();
         String selectQuery = "SELECT * FROM "+ TABLE_ENTRAINEMENT;
@@ -123,6 +152,10 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         return listes;
     }
 
+    /**
+     * Requete dans la table Exercice
+     * @return tous les exercices
+     */
     public ArrayList<Exercice>getAllExercices(){
         ArrayList<Exercice> listes = new ArrayList<>();
         String selectQuery ="SELECT * FROM " +TABLE_EXERCICE;
@@ -138,6 +171,11 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         return listes;
     }
 
+    /**
+     * Requête dans la table programme
+     * @param a id de l'entrainement
+     * @return la liste d'exercice d'un entrainement
+     */
     public ArrayList<Exercice>getExerciceProg(int a){
         ArrayList<Exercice> listeProg= new ArrayList<>();
         String selectQuery = "SELECT * FROM "+ TABLE_EXERCICE + " ex, "+ TABLE_PROGRAMME +
@@ -155,6 +193,11 @@ public class PersistanceTraining extends SQLiteOpenHelper {
         return (listeProg == null) ? listeProg:listeProg;
     }
 
+    /**
+     * Ajoute dans programme l'id de la clé de l'entrainement et de l'exercice qu'on souhaite ajouter
+     * @param a
+     * @param id
+     */
     public void addExerciceList(Exercice a,int id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
