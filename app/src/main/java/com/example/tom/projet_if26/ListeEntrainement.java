@@ -10,10 +10,6 @@ public class ListeEntrainement {
         return repetition;
     }
 
-    public void setRepétition(int repétition) {
-        this.repetition = repetition;
-    }
-
     public ListeEntrainement(String titre, int repetition,String description,int ID){
         this.titre=titre;
         this.repetition=repetition;

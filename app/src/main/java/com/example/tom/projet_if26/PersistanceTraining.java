@@ -48,6 +48,7 @@ public class PersistanceTraining extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_ENTRAINEMENT + "(" +
                         ATTRIBUT_KEY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         ATTRIBUT_TITRE_ENTRAINEMENT + " VARCHAR," +
+                        ATTRIBUT_REPETITION + "INTEGER, "+
                         ATTRIBUT_DESCRIPTION_ENT + " VARCHAR)";
 
         db.execSQL(table_entrainement_create);
