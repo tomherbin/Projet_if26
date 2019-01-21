@@ -15,23 +15,23 @@ public class PersistanceTraining extends SQLiteOpenHelper {
     // nom du fichier pour la base
     public static final String DATABASE_NAME = "Entrainements.db";
     // nom de la table
-    private static final String TABLE_ENTRAINEMENT = "entrainement";
+    public static final String TABLE_ENTRAINEMENT = "entrainement";
     // liste des attributs
-    private static final String ATTRIBUT_TITRE_ENTRAINEMENT = "titreEntrainement";
-    private static final String ATTRIBUT_KEY = "cle";
-    private static final String ATTRIBUT_REPETITION = "reps";
-    private static final String ATTRIBUT_DESCRIPTION_ENT = "des_entre";
+    public static final String ATTRIBUT_TITRE_ENTRAINEMENT = "titreEntrainement";
+    public static final String ATTRIBUT_KEY = "cle";
+    public static final String ATTRIBUT_REPETITION = "reps";
+    public static final String ATTRIBUT_DESCRIPTION_ENT = "des_entre";
 
-    private static final String TABLE_PROGRAMME ="programme";
-    private static final String ATTRIBUT_ID_EPROG = "cleE";
-    private static final String ATTRIBUT_ID_EXPROG = "cleEX";
+    public static final String TABLE_PROGRAMME ="programme";
+    public static final String ATTRIBUT_ID_EPROG = "cleE";
+    public static final String ATTRIBUT_ID_EXPROG = "cleEX";
 
 
     // nom de la table
-    private static final String TABLE_EXERCICE = "exercice";
+    public static final String TABLE_EXERCICE = "exercice";
     //attributs
-    private static final String ATTRIBUT_TITRE_EXERCICE = "titreExercice";
-    private static final String ATTRIBUT_EXERCICEKEY = "exerciceKey";
+    public static final String ATTRIBUT_TITRE_EXERCICE = "titreExercice";
+    public static final String ATTRIBUT_EXERCICEKEY = "exerciceKey";
     private static final String ATTRIBUT_REPS = "reps";
     private static final String ATTRIBUT_SERIE = "serie";
     private static final String ATTRIBUT_DESCRIPTION_EXO="descexo";

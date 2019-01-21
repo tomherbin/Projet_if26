@@ -6,23 +6,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v7.widget.Toolbar;
 
-public class DetailExo extends AppCompatActivity {
-    private TextView tv;
+import java.io.Serializable;
+
+public class DetailExo extends AppCompatActivity implements Serializable {
     private ImageView img;
-    public static final String EXTRA_EXERCICE = "exercice";
+    private TextView desc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_entrainement);
         Intent intent = getIntent();
+        intent.getSerializableExtra("exo");
 
 
-        tv= this.findViewById(R.id.tvdesc);
+
+        desc=this.findViewById(R.id.tvdesc);
 
         img = this.findViewById(R.id.img);
+        Bundle b = getIntent().getExtras();
+        Exercice ex = b.getParcelable("exo");
+        getSupportActionBar().setTitle(ex.getTitre());
 
-        Exercice exercice=getIntent().getExtras().getParcelable(EXTRA_EXERCICE);
-        assert exercice!=null;
+        desc.setText(ex.getDesc());
+
+
     }
 }

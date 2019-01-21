@@ -41,7 +41,7 @@ public class AdapterExercicePredefini extends RecyclerView.Adapter<AdapterExerci
             public void onClick(View view) {
                 final PersistanceTraining db = new PersistanceTraining(context);
                 db.addExerciceList(listes, idEntrainement);
-                Toast.makeText(context,"Ajout réussi",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Ajout "+listes.getTitre(),Toast.LENGTH_SHORT).show();
             }
         });
 

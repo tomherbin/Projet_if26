@@ -1,11 +1,14 @@
 package com.example.tom.projet_if26;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.ListView;
 
@@ -17,6 +20,10 @@ public class ListeExos extends AppCompatActivity {
     private ArrayList<Exercice> exos;
     private FloatingActionButton fba;
     private int id;
+    private PersistanceTraining db;
+    private Cursor cursor;
+    private AdapterListeExos adapt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +32,28 @@ public class ListeExos extends AppCompatActivity {
         getSupportActionBar().setTitle("Exercices");
         Intent intent = getIntent();
         id = intent.getIntExtra("ID", 0);
-        PersistanceTraining db = new PersistanceTraining(this);
+        db = new PersistanceTraining(this);
         db.initData();
         exos=db.getExerciceProg(id);
         if(exos!=null){
             exos = db.getExerciceProg(id);
         }
-
         RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
-        rv.setAdapter(new AdapterListeExos(this, exos));
+        adapt = new AdapterListeExos(this,exos);
+        rv.setAdapter(adapt);
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+            }
+        }).attachToRecyclerView(rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
+
 
         fba = (FloatingActionButton) this.findViewById(R.id.addex);
 
@@ -44,5 +63,18 @@ public void ajouter(View v){
         Intent intent = new Intent(this,ExercicePredefini.class);
         intent.putExtra("ID",id);
         startActivity(intent);
-}
+    }
+    public void onResume(){
+        super.onResume();
+        db = new PersistanceTraining(this);
+        db.initData();
+        exos=db.getExerciceProg(id);
+        if(exos!=null){
+            exos = db.getExerciceProg(id);
+        }
+        RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
+        rv.setAdapter(new AdapterListeExos(this,exos));
+        rv.setLayoutManager(new LinearLayoutManager(this));
+    }
+
     }

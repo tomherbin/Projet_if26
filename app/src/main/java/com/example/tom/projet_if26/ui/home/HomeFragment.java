@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.tom.projet_if26.AdapterListeEntrainement;
 import com.example.tom.projet_if26.ListeEntrainement;
@@ -82,29 +83,34 @@ public class HomeFragment extends ListFragment {
                 }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        if(!nom.getText().toString().equals("")&&!desc.getText().toString().equals("")) {
+                            db.addEntrainement(nom.getText().toString(), desc.getText().toString());
+                            final SQLiteDatabase bdd = db.getReadableDatabase();
 
-                        db.addEntrainement(nom.getText().toString(),desc.getText().toString());
-                        final SQLiteDatabase bdd= db.getReadableDatabase();
+                            Cursor cursor = bdd.rawQuery("SELECT * FROM entrainement", null);
+                            int i = 0;
+                            if (cursor != null && cursor.moveToFirst()) {
+                                do {
+                                    i = cursor.getInt(cursor.getColumnIndex("cle"));
+                                } while (cursor.moveToNext());
+                            }
+                            bdd.close();
 
-                        Cursor cursor= bdd.rawQuery("SELECT * FROM entrainement",null);
-                        int i=0;
-                        if (cursor!=null&&cursor.moveToFirst()){
-                            do{
-                            i=cursor.getInt(cursor.getColumnIndex("cle"));
-                            }while(cursor.moveToNext());
+                            ListeEntrainement le = new ListeEntrainement(nom.getText().toString(), 0, desc.getText().toString(), i);
+                            listes.add(le);
+                            adapt.notifyDataSetChanged();
+                            dialog.dismiss();
+
+
+                            Intent myIntent = new Intent(getContext(), ListeExos.class);
+                            myIntent.putExtra("ID", +i);
+                            getContext().startActivity(myIntent);
                         }
-                        bdd.close();
-
-                       ListeEntrainement le = new ListeEntrainement(nom.getText().toString(),0,desc.getText().toString(),i);
-                        listes.add(le);
-                        adapt.notifyDataSetChanged();
-                        dialog.dismiss();
-
-
-                        Intent myIntent = new Intent(getContext(), ListeExos.class);
-                        myIntent.putExtra("ID",+i);
-                        getContext().startActivity(myIntent);
-
+                        else if(!nom.getText().toString().equals("")&&desc.getText().toString().equals("")) {
+                            Toast.makeText(getContext(),"Veuillez entrer un nom !",Toast.LENGTH_SHORT).show();
+                        }else if(nom.getText().toString().equals("")&&!desc.getText().toString().equals("")) {
+                            Toast.makeText(getContext(),"Veuillez entrer une description !",Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 });
