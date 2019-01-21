@@ -19,10 +19,10 @@ import java.util.ArrayList;
 
 public class ListeExos extends AppCompatActivity {
     private ArrayList<Exercice> exos;
+    private RecyclerView rv;
     private FloatingActionButton fba;
     private int id;
     private PersistanceTraining db;
-    private Cursor cursor;
     private AdapterListeExos adapt;
     private SQLiteDatabase sqLiteDatabase;
 
@@ -31,6 +31,7 @@ public class ListeExos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exo_fragment);
         getSupportActionBar().setTitle("Exercices");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
         id = intent.getIntExtra("ID", 0);
         db = new PersistanceTraining(this);
@@ -40,22 +41,26 @@ public class ListeExos extends AppCompatActivity {
         if(exos!=null){
             exos = db.getExerciceProg(id);
         }
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
+        rv = (RecyclerView) findViewById(R.id.rv);
         adapt = new AdapterListeExos(this,exos);
         rv.setAdapter(adapt);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
                 int idE= (int) viewHolder.itemView.getTag();
                 removeExercice(idE,id);
+                adapt.removet(viewHolder.getAdapterPosition());
+
             }
         }).attachToRecyclerView(rv);
-        rv.setLayoutManager(new LinearLayoutManager(this));
+
 
 
         fba = (FloatingActionButton) this.findViewById(R.id.addex);
@@ -69,6 +74,8 @@ public void ajouter(View v){
     }
     public void onResume(){
         super.onResume();
+        Intent intent = getIntent();
+        id = intent.getIntExtra("ID", 0);
         db = new PersistanceTraining(this);
         db.initData();
         exos=db.getExerciceProg(id);

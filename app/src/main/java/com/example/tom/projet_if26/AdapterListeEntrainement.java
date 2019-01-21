@@ -81,4 +81,8 @@ public class AdapterListeEntrainement extends RecyclerView.Adapter<AdapterListeE
             this.description =(TextView) v.findViewById(R.id.description);
         }
     }
+    public void removeAt(int position){
+        liste.remove(position);
+        notifyItemRemoved(position);
+    }
 }

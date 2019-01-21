@@ -25,8 +25,8 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.ViewHolder> implements Serializable  {
-    private ArrayList<Exercice> exos;
+public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.ViewHolder> {
+    ArrayList<Exercice> exos;
     private Context context;
     private Cursor cursor;
 
@@ -92,6 +92,9 @@ public class AdapterListeExos extends RecyclerView.Adapter<AdapterListeExos.View
             this.image = (ImageView) v.findViewById(R.id.schema);
         }
     }
-
+    public void removet(int position){
+        exos.remove(position);
+        notifyItemRemoved(position);
+    }
 
 }

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ private TextView txt;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercice_predefini);
         getSupportActionBar().setTitle("Listes exercices");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent =getIntent();
         id= intent.getIntExtra("ID",0);
         PersistanceTraining db = new PersistanceTraining(this);
@@ -31,5 +33,14 @@ private TextView txt;
         rv.setAdapter(new AdapterExercicePredefini(this, exos,id));
         rv.setLayoutManager(new LinearLayoutManager(this));
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
 
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

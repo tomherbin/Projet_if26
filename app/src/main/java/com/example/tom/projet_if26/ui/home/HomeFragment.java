@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class HomeFragment extends ListFragment {
 
     private HomeViewModel mViewModel;
-    private  AdapterListeEntrainement adaptateur;
+    private  AdapterListeEntrainement adapt;
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -64,7 +64,7 @@ public class HomeFragment extends ListFragment {
         listes.clear();
         listes=db.getAllEntrainements();
 
-        final AdapterListeEntrainement adapt = new AdapterListeEntrainement(getActivity(),listes);
+        adapt = new AdapterListeEntrainement(getActivity(),listes);
         lv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
@@ -132,7 +132,7 @@ public class HomeFragment extends ListFragment {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int idE= (int) viewHolder.itemView.getTag();
                 removeEntrainement(idE);
-
+                adapt.removeAt(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(lv);
     }
